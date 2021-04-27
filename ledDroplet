@@ -1,0 +1,107 @@
+//This is to make random sizes droplets at random places on the NeoPixel LED strip (1 meter / 144 Leds.) 
+//REQUIRED!! Import Library Adafruit NeoPixel.
+
+// Released under the GPLv3 license to match the rest of the
+// Adafruit NeoPixel library
+
+#include <Adafruit_NeoPixel.h>
+#ifdef __AVR__
+ #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
+#endif
+
+// Which pin on the Arduino is connected to the NeoPixels?
+#define PIN        6 // On Trinket or Gemma, suggest changing this to 1
+
+// How many NeoPixels are attached to the Arduino?
+#define NUMPIXELS 144 // Popular NeoPixel ring size
+
+// When setting up the NeoPixel library, we tell it how many pixels,
+// and which pin to use to send signals. Note that for older NeoPixel
+// strips you might need to change the third parameter -- see the
+// strandtest example for more information on possible values.
+Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+
+#define DELAYVAL 200 // Time (in milliseconds) to pause between pixels
+int randomNum;
+int first;
+int second;
+int third;
+int forth;
+int fith;
+int blank;
+int color1;
+int color2;
+int color3;
+int color4;
+int color5;
+
+void setup() {
+  // These lines are specifically to support the Adafruit Trinket 5V 16 MHz.
+  // Any other board, you can remove this part (but no harm leaving it):
+#if defined(__AVR_ATtiny85__) && (F_CPU == 16000000)
+  clock_prescale_set(clock_div_1);
+#endif
+  // END of Trinket-specific code.
+
+  pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
+}
+
+void loop() {
+  pixels.clear(); // Set all pixel colors to 'off'
+  first = random(144);
+  second = first;
+  third = second;
+  forth = third;
+  fith = forth;
+  blank = fith;
+
+  color1 = 0;
+  color2 = 100;
+  color3 = 50;
+  color4 = 25;
+  color5 = 10;
+
+  randomNum = random(10,50);
+   
+  for(int i = 0; i<randomNum; i++){
+
+    if(i >= randomNum - 5) { color1 = 0;}
+    if(i >= randomNum - 4) { color2 = 0;}
+    if(i >= randomNum - 3) { color3 = 0;}
+    if(i >= randomNum - 2) { color4 = 0;}
+    if(i >= randomNum - 1) { color5 = 0;}
+
+   
+    pixels.setPixelColor(first, pixels.Color(0, color1, 0));
+    pixels.setPixelColor((first - 1), pixels.Color(0, 0, 0));
+        
+    if(second < (first - 1)){
+      second++;
+      pixels.setPixelColor(second, pixels.Color(0, color2, 0));
+    }
+    if(third < (second - 1)){
+      third++;
+      pixels.setPixelColor(third, pixels.Color(0, color3, 0));
+    }
+    if(forth < (third - 1)){
+      forth++;
+      pixels.setPixelColor(forth, pixels.Color(0, color4, 0));
+    }
+    if(fith < (forth - 1)){
+      fith++;
+      pixels.setPixelColor(fith, pixels.Color(0, color5, 0));
+    }
+    if(blank < (fith - 1)){
+      blank++;
+      pixels.setPixelColor(blank, pixels.Color(0, 0, 0));
+    }
+    pixels.show();
+    delay(50);
+    first++;
+  }
+
+//  pixels.show();   // Send the updated pixel colors to the hardware.
+  delay(DELAYVAL); // Pause before next pass through loop
+    
+  
+}
